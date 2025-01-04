@@ -1,0 +1,144 @@
+@font-face {
+  font-family: "Inria Serif-Regular";
+  src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inria Serif-Bold";
+  src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inria Serif-Regular';
+  background-color: #fdfdfd;
+  overflow-x: hidden; /* 수평 스크롤 방지 */
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 100vh;  /* 각 화면을 최소 100vh로 설정 */
+}
+
+.overlap {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.image {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  transform: translateX(-50%) rotate(180deg);
+  width: 200px;
+}
+
+.group {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+.overlap-group .text-wrapper {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+}
+
+.div {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+.vector {
+  margin-top: 20px;
+  width: 100px;
+}
+
+.effect-cloud {
+  position: absolute;
+  top: 150px;
+  left: 10%;
+  width: 150px;
+}
+
+.effect-cloud-2 {
+  position: absolute;
+  bottom: 20%;
+  right: 10%;
+  width: 150px;
+}
+
+.overlap-2 {
+  text-align: center;
+  margin-top: 200px;
+}
+
+.re-PET .span {
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
+}
+
+.re-PET .text-wrapper-2,
+.re-PET .text-wrapper-3,
+.re-PET .text-wrapper-4 {
+  font-size: 20px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.rectangle {
+  margin: 30px auto;
+  width: 200px;
+  cursor: pointer;
+}
+
+.text-wrapper-5 {
+  font-size: 16px;
+  color: #fff;
+  background-color: #f6a623;
+  padding: 12px 30px;
+  border-radius: 25px;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-wrapper-5:hover {
+  background-color: #f57c00;
+}
+
+.screen {
+  overflow-y: auto; /* 수직 스크롤 활성화 */
+}
+
+.screen::-webkit-scrollbar {
+  width: 8px;
+}
+
+.screen::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.screen::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
