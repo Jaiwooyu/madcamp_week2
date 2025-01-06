@@ -66,14 +66,38 @@ const Chat = () => {
                     credentials: 'include'
                 });
                 const data = await response.json();
+                
                 if (data) {
-                    setMessages(data);
+                    console.log(data);
+    
+                    // 메시지 파싱 및 정렬
+                    const parsedMessages = data.map(item => ([
+                        {
+                            role: 'user',
+                            content: item.userMessage,
+                            timestamp: item.createdAt
+                        },
+                        {
+                            role: 'assistant',
+                            content: item.petResponse,
+                            timestamp: item.createdAt
+                        }
+                    ])).flat();
+    
+                    // 타임스탬프 기준으로 정렬
+                    const sortedMessages = parsedMessages.sort((a, b) => 
+                        new Date(a.timestamp) - new Date(b.timestamp)
+                    );
+    
+                    setMessages(sortedMessages);
                 }
             } catch (error) {
                 console.error('채팅 내역을 불러오는데 실패했습니다:', error);
             }
         };
+        loadPreviousChat();
     }, [petId]);
+    
 
     // 채팅 시작
     useEffect(() => {
