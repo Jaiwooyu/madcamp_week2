@@ -13,7 +13,7 @@ const Gallery = () => {
 
   const fetchPhotos = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/photos', {
+      const response = await axios.get('http://localhost:8080/board', {
         withCredentials: true
       });
       setPhotos(response.data);
@@ -29,10 +29,12 @@ const Gallery = () => {
   return (
     <div className="gallery-container">
       <div className="navbar">
-        <div className="logo">Re:PET</div>
+        <div className="logo" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+        Re:PET    
+        </div>
         <div className="nav-links">
           <span onClick={() => navigate('/record')}>기록하기</span>
-          <span className="active">추억하기</span>
+          <span onClick={() => navigate('/remember')}>추억하기</span>
           <span onClick={() => navigate('/chat')}>대화하기</span>
         </div>
       </div>
@@ -53,7 +55,7 @@ const Gallery = () => {
                 className="photo-item"
                 onClick={() => handlePhotoClick(photo.id)}
               >
-                <img src={photo.imageUrl} alt={photo.title} />
+                <img src={photo.imageFileName ? `http://localhost:8080${photo.imageFileName}` : 'default-image.png'} alt={photo.title} />
               </div>
             ))}
           </div>

@@ -1,0 +1,74 @@
+.splash-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .logo {
+    font-family: 'Inria Serif-Bold', serif;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links span {
+    font-family: 'Inria Serif-Regular', serif;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .splash-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .splash-text {
+    font-family: 'Inria Serif-Bold', serif;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+  
+  .circle-decoration {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  .circle-1 {
+    width: 100px;
+    height: 100px;
+    background-color: #FFE4B5;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .circle-2 {
+    width: 150px;
+    height: 150px;
+    background-color: #FFF8DC;
+    top: 0;
+    right: -50px;
+  }

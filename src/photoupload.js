@@ -30,10 +30,10 @@ const PhotoUpload = () => {
     const submitData = new FormData();
     submitData.append('title', formData.title);
     submitData.append('content', formData.content);
-    submitData.append('image', formData.image);
+    submitData.append('imageFile', formData.image);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/photos', submitData, {
+      const response = await axios.post('http://localhost:8080/board', submitData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -48,10 +48,12 @@ const PhotoUpload = () => {
   return (
     <div className="upload-container">
       <div className="navbar">
-        <div className="logo">Re:PET</div>
+        <div className="logo" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+        Re:PET    
+        </div>
         <div className="nav-links">
           <span onClick={() => navigate('/record')}>기록하기</span>
-          <span className="active">추억하기</span>
+          <span onClick={() => navigate('/remember')}>추억하기</span>
           <span onClick={() => navigate('/chat')}>대화하기</span>
         </div>
       </div>

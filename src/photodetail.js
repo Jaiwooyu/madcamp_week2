@@ -14,7 +14,7 @@ const PhotoDetail = () => {
 
   const fetchPhotoDetail = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/photos/${id}`, {
+      const response = await axios.get(`http://localhost:8080/board/${id}`, {
         withCredentials: true
       });
       setPhoto(response.data);
@@ -25,10 +25,10 @@ const PhotoDetail = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8080/api/photos/${id}`, {
+      await axios.delete(`http://localhost:8080/board/${id}`, {
         withCredentials: true
       });
-      navigate('/gallery');
+      navigate('/remember');
     } catch (error) {
       console.error('삭제 실패:', error);
     }
@@ -39,27 +39,29 @@ const PhotoDetail = () => {
   return (
     <div className="detail-container">
       <div className="navbar">
-        <div className="logo">Re:PET</div>
+        <div className="logo" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+        Re:PET    
+        </div>
         <div className="nav-links">
           <span onClick={() => navigate('/record')}>기록하기</span>
-          <span className="active">추억하기</span>
+          <span onClick={() => navigate('/remember')}>추억하기</span>
           <span onClick={() => navigate('/chat')}>대화하기</span>
         </div>
       </div>
 
       <div className="detail-content">
         <div className="photo-content">
-          <img src={photo.imageUrl} alt={photo.title} />
-          <h3>{photo.title}</h3>
+          <img src={photo.imageFileName ? `http://localhost:8080${photo.imageFileName}` : 'default-image.png'} alt={photo.title} />
+        <h3>{photo.title}</h3>
           <p>{photo.content}</p>
         </div>
 
         <div className="button-group">
+        <button onClick={() => navigate(`/remember`)} className="edit-button">
+            이전으로
+          </button>
           <button onClick={handleDelete} className="delete-button">
             삭제하기
-          </button>
-          <button onClick={() => navigate(`/photo/edit/${id}`)} className="edit-button">
-            수정하기
           </button>
         </div>
       </div>

@@ -7,6 +7,7 @@ import Chat from './chat';
 import Gallery from './gallery';
 import PhotoUpload from './photoupload';
 import PhotoDetail from './photodetail';
+import Splash from './splash';
 
 const App = () => {
  return (
@@ -19,6 +20,7 @@ const App = () => {
        <Route path="/remember" element={<Gallery />} />
        <Route path="/photo/upload" element={<PhotoUpload />} />
        <Route path="/photo/:id" element={<PhotoDetail />} />
+       <Route path="/splash" element={<Splash />} />
      </Routes>
    </Router>
  );
