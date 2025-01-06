@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "Inria Serif-Regular";
+    src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Inria Serif-Bold";
+    src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.detail-content {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.photo-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.photo-content img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.photo-content h3 {
+    font-family: 'Inria Serif-Bold', serif;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.photo-content p {
+    font-family: 'Inria Serif-Regular', serif;
+    color: #666;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 600px;
+    background-color: #FFF8DC;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.delete-button, .edit-button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inria Serif-Regular', serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button {
+    background-color: #FFE4E1;
+    color: #FF6B6B;
+}
+
+.edit-button {
+    background-color: #E6E6FA;
+    color: #6B66FF;
+}
+
+.delete-button:hover {
+    background-color: #FFB6C1;
+}
+
+.edit-button:hover {
+    background-color: #D8BFD8;
+}
