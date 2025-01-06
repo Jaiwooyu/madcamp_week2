@@ -9,7 +9,7 @@ export const Homepage = () => {
 
   // 버튼 클릭 시 HTML 요청 함수
   const handleButtonClick = async () => {
-    window.location.href = "http://localhost:8080/login"
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
 
   return (
@@ -71,3 +71,5 @@ export const Homepage = () => {
     </div>
   );
 };
+
+export default Homepage;
