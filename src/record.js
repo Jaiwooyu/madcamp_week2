@@ -49,9 +49,8 @@ const Record = () => {
      if (currentStep < 3) {
        setCurrentStep(currentStep + 1);
      } else {
-       alert('기억하기가 완료됐어요!');
        submitData();
-       navigate('/dashboard');
+       navigate('/splash');
      }
    }
  };
@@ -83,7 +82,6 @@ const Record = () => {
        withCredentials: true
      })
      .then((response) => {
-       alert('기록하기가 완료됐습니다!');
        console.log(response.data);
      })
      .catch((error) => {
@@ -94,12 +92,13 @@ const Record = () => {
  return (
    <div className="dashboard">
      <div className="navbar">
-       <div className="logo">Re:PET</div>
+        <div className="logo" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+        Re:PET    
+        </div>
        <div className="nav-links">
-         <span className="active">기록하기</span>
-         <span onClick={() => navigate('/memory')}>기억하기</span>
-         <span onClick={() => navigate('/chat')}>대화하기</span>
-         <span onClick={() => navigate('/guide')}>이용 가이드</span>
+          <span onClick={() => navigate('/record')}>기록하기</span>
+          <span onClick={() => navigate('/remember')}>추억하기</span>
+          <span onClick={() => navigate('/chat')}>대화하기</span>
        </div>
      </div>
 

@@ -31,9 +31,9 @@ const Dashboard = () => {
       <div className="navbar">
         <div className="logo">Re:PET</div>
         <div className="nav-links">
-          <span onClick={() => handleNavigation('/record')}>기록하기</span>
-          <span onClick={() => handleNavigation('/remember')}>추억하기</span>
-          <span onClick={() => handleNavigation('/chat')}>대화하기</span>
+          <span onClick={() => navigate('/record')}>기록하기</span>
+          <span onClick={() => navigate('/remember')}>추억하기</span>
+          <span onClick={() => navigate('/chat')}>대화하기</span>
           <span>이용 가이드</span>
         </div>
         <div className="profile">

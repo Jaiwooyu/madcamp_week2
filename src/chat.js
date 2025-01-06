@@ -156,12 +156,13 @@ const Chat = () => {
     return (
         <div className="chat-container">
             <div className="navbar">
-                <div className="logo">Re:PET</div>
+            <div className="logo" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+            Re:PET    
+            </div>
                 <div className="nav-links">
-                    <span onClick={() => handleNavigation('record')}>기록하기</span>
-                    <span onClick={() => handleNavigation('remember')}>기억하기</span>
-                    <span className="active">대화하기</span>
-                    <span>이용 가이드</span>
+                    <span onClick={() => navigate('/record')}>기록하기</span>
+                    <span onClick={() => navigate('/remember')}>추억하기</span>
+                    <span onClick={() => navigate('/chat')}>대화하기</span>
                 </div>
                 <div className="profile">
                     {/* 사용자 프로필 이미지 */}
