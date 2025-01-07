@@ -1,52 +1,7 @@
-@font-face {
-    font-family: "Inria Serif-Regular";
-    src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: "Inria Serif-Bold";
-    src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-  }
-
 .gallery-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #fff;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.logo {
-    font-family: 'Inria Serif-Bold', serif;
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links span {
-    font-family: 'Inria Serif-Regular', serif;
-    cursor: pointer;
-    color: #666;
-}
-
-.nav-links span.active {
-    font-family: 'Inria Serif-Bold', serif;
-    color: #333;
 }
 
 .content {
@@ -54,6 +9,7 @@
     flex: 1;
     padding: 2rem;
     gap: 2rem;
+    margin-top: 70px;
 }
 
 .left-section {
@@ -64,21 +20,6 @@
 .left-section h2 {
     margin-bottom: 2rem;
     font-family: 'Inria Serif-Bold', serif;
-}
-
-.upload-button {
-    width: 100%;
-    padding: 1rem;
-    background-color: #FFE4B5;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Inria Serif-Regular', serif;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.upload-button:hover {
-    background-color: #FFD700;
 }
 
 .right-section {

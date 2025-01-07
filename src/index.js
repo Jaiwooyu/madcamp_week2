@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // ReactDOM을 임포트
+import './commom.css';
 import './index.css'; // 스타일 파일
 import { Homepage } from './components/Homepage'; // Homepage 컴포넌트 임포트
 import App from './App';
