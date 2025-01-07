@@ -18,15 +18,10 @@ export const Homepage = () => {
         
         {/* Hero section */}
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-yellow-400 mb-4 tracking-wide">
+          <h1 className="text-6xl font-bold text-gray-700 mb-4 tracking-wide">
             Re:PET
           </h1>
-          <button 
-            onClick={() => handleButtonClick("login")}
-            className="px-8 py-3 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors duration-300 shadow-lg"
-          >
-            로그인하기
-          </button>
+          
         </div>
 
         {/* Info section */}
