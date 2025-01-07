@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @font-face {
   font-family: "Inria Serif-Regular";
   src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
