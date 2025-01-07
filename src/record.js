@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './commom.css';
 import './record.css';
 import axios from 'axios';
 
