@@ -3,6 +3,7 @@ import effectCloud1 from "./assets/images/effect-cloud-2.png";
 import effectCloud2 from "./assets/images/effect-cloud-2.png";
 import effectCloud3 from "./assets/images/effect-cloud-3.png";
 import image1 from "./assets/images/image-1.png";
+import './commom.css';
 
 export const Homepage = () => {
   const [htmlContent, setHtmlContent] = useState("");

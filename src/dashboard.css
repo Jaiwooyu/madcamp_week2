@@ -1,9 +1,9 @@
-.content {
-  padding: 2rem;
+/* dashboard specific styles */
+.pet-chat {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px);
+  width: 100%;
 }
 
 .chat-card {
@@ -13,6 +13,8 @@
   background: white;
   border-radius: 1rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1000px;
 }
 
 .pet-image {
@@ -37,27 +39,17 @@
 
 .chat-info h2 {
   font-size: 2rem;
-  font-weight: bold;
-}
-
-.chat-button {
-  padding: 0.8rem 2rem;
-  background-color: #FFE4B5;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.chat-button:hover {
-  background-color: #FFD700;
+  font-family: 'Inria Serif-Bold', serif;
+  color: #333;
 }
 
 .no-pet {
   display: flex;
   align-items: center;
   gap: 4rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .welcome-card {
@@ -68,22 +60,8 @@
 
 .welcome-card h2 {
   font-size: 2rem;
-  font-weight: bold;
-}
-
-.record-button {
-  margin-top: 2rem;
-  padding: 0.8rem 2rem;
-  background-color: #FFE4B5;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.record-button:hover {
-  background-color: #FFD700;
+  font-family: 'Inria Serif-Bold', serif;
+  color: #333;
 }
 
 .dog-image {
