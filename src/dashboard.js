@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './commom.css';
-import './dashboard.css';
+import "./commom.css";
+import "./dashboard.css";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -32,7 +32,7 @@ const Dashboard = () => {
           }
         })
         .catch((error) => {
-          console.error('펫 정보 불러오기 실패:', error);
+          console.error("펫 정보 불러오기 실패:", error);
         });
     }
   }, [user]);
@@ -42,15 +42,25 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="navbar">
-        <div className="logo">Re:PET</div>
+        <div
+          className="logo"
+          onClick={() => navigate("/dashboard")}
+          style={{ cursor: "pointer" }}
+        >
+          Re:PET
+        </div>
         <div className="nav-links">
-          <span onClick={() => navigate('/record')}>기록하기</span>
-          <span onClick={() => navigate('/remember')}>추억하기</span>
-          <span onClick={() => navigate('/chat')}>대화하기</span>
-          <span>이용 가이드</span>
+          <span onClick={() => navigate("/record")}>기록하기</span>
+          <span onClick={() => navigate("/remember")}>추억하기</span>
+          <span onClick={() => navigate("/chat")}>대화하기</span>
         </div>
         <div className="profile">
-          <img src={user.picture || 'default-profile.png'} alt="User" className="profile-pic" />
+          {/* 사용자 프로필 이미지 */}
+          <img
+            src={user?.picture ? user.picture : "/default-profile.png"}
+            alt="User"
+            className="profile-pic"
+          />
         </div>
       </div>
 
@@ -60,15 +70,20 @@ const Dashboard = () => {
           <div className="pet-chat">
             <div className="chat-card">
               <div className="pet-image">
-                <img 
-                  src={`http://localhost:8080${pet.imageUrl || '/default-pet.png'}`} 
-                  alt="반려동물" 
+                <img
+                  src={`http://localhost:8080${
+                    pet.imageUrl || "/default-pet.png"
+                  }`}
+                  alt="반려동물"
                 />
               </div>
               <div className="chat-info">
                 <h2>"친구야, 잘 지냈어?"</h2>
                 <div className="button-group">
-                  <button onClick={() => navigate('/chat')} className="chat-button">
+                  <button
+                    onClick={() => navigate("/chat")}
+                    className="chat-button"
+                  >
                     대화하기
                   </button>
                 </div>
@@ -81,7 +96,10 @@ const Dashboard = () => {
             <div className="welcome-card">
               <h2>안녕, 나의 친구</h2>
               <h2>잘 가, 나의 가족</h2>
-              <button onClick={() => navigate('/record')} className="record-button">
+              <button
+                onClick={() => navigate("/record")}
+                className="record-button"
+              >
                 반려 가족 정보 기록하기
               </button>
             </div>
