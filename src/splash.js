@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./commom.css";
 import "./splash.css";
 import axios from "axios";
+import ProfileTab from "./ProfileTab";
 
 const Splash = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
+
   // 사용자 정보 불러오기,
   useEffect(() => {
     axios
@@ -42,13 +46,16 @@ const Splash = () => {
           <span onClick={() => navigate("/remember")}>추억하기</span>
           <span onClick={() => navigate("/chat")}>대화하기</span>
         </div>
-        <div className="profile">
-          {/* 사용자 프로필 이미지 */}
+        <div className="relative">
           <img
-            src={user?.picture ? user.picture : "/default-profile.png"}
+            src={user?.picture || "/default-profile.png"}
             alt="User"
-            className="profile-pic"
+            className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors cursor-pointer"
+            onClick={() => setShowProfileTab(!showProfileTab)}
           />
+          {showProfileTab && (
+            <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
+          )}
         </div>
       </div>
 

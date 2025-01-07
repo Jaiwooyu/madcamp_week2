@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import ProfileTab from "./ProfileTab";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [pet, setPet] = useState(null);
   const navigate = useNavigate();
+
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -41,7 +45,7 @@ const Dashboard = () => {
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div 
+          <div
             className="text-2xl font-bold text-yellow-400 cursor-pointer hover:text-yellow-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
@@ -50,19 +54,19 @@ const Dashboard = () => {
 
           {/* Navigation Links */}
           <div className="flex items-center space-x-8">
-            <button 
+            <button
               onClick={() => navigate("/record")}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               기록하기
             </button>
-            <button 
+            <button
               onClick={() => navigate("/remember")}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               추억하기
             </button>
-            <button 
+            <button
               onClick={() => navigate("/chat")}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
@@ -76,7 +80,14 @@ const Dashboard = () => {
               src={user?.picture || "/default-profile.png"}
               alt="User"
               className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors cursor-pointer"
+              onClick={() => setShowProfileTab(!showProfileTab)}
             />
+            {showProfileTab && (
+              <ProfileTab
+                user={user}
+                onClose={() => setShowProfileTab(false)}
+              />
+            )}
           </div>
         </div>
       </nav>
@@ -90,7 +101,9 @@ const Dashboard = () => {
               {/* Pet Image */}
               <div className="w-48 h-48 rounded-full overflow-hidden flex-shrink-0 border-4 border-yellow-100">
                 <img
-                  src={`http://localhost:8080${pet.imageUrl || "/default-pet.png"}`}
+                  src={`http://localhost:8080${
+                    pet.imageUrl || "/default-pet.png"
+                  }`}
                   alt="반려동물"
                   className="w-full h-full object-cover"
                 />
@@ -127,11 +140,11 @@ const Dashboard = () => {
                 반려 가족 정보 기록하기
               </button>
             </div>
-            
+
             <div className="flex justify-center">
-              <img 
-                src="/golden-retriever.png" 
-                alt="골든 리트리버" 
+              <img
+                src="/golden-retriever.png"
+                alt="골든 리트리버"
                 className="max-w-md w-full h-auto rounded-lg shadow-lg"
               />
             </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import ProfileTab from "./ProfileTab";
 
 const Record = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ const Record = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -69,7 +72,7 @@ const Record = () => {
 
   const submitData = () => {
     const submitForm = new FormData();
-    Object.keys(formData).forEach(key => {
+    Object.keys(formData).forEach((key) => {
       submitForm.append(key, formData[key]);
     });
 
@@ -91,7 +94,7 @@ const Record = () => {
       {/* Navbar */}
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div 
+          <div
             className="text-2xl font-bold text-yellow-400 cursor-pointer hover:text-yellow-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
@@ -99,19 +102,19 @@ const Record = () => {
           </div>
 
           <div className="flex items-center space-x-8">
-            <button 
+            <button
               onClick={() => navigate("/record")}
               className="text-yellow-400 hover:text-yellow-500 transition-colors"
             >
               기록하기
             </button>
-            <button 
+            <button
               onClick={() => navigate("/remember")}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               추억하기
             </button>
-            <button 
+            <button
               onClick={() => navigate("/chat")}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
@@ -123,8 +126,15 @@ const Record = () => {
             <img
               src={user?.picture || "/default-profile.png"}
               alt="User"
-              className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors"
+              className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors cursor-pointer"
+              onClick={() => setShowProfileTab(!showProfileTab)}
             />
+            {showProfileTab && (
+              <ProfileTab
+                user={user}
+                onClose={() => setShowProfileTab(false)}
+              />
+            )}
           </div>
         </div>
       </nav>
@@ -141,9 +151,9 @@ const Record = () => {
             <div
               key={step}
               className={`w-1/4 h-2 ${
-                step <= currentStep ? 'bg-yellow-400' : 'bg-gray-200'
-              } ${step === 0 ? 'rounded-l-full' : ''} ${
-                step === 3 ? 'rounded-r-full' : ''
+                step <= currentStep ? "bg-yellow-400" : "bg-gray-200"
+              } ${step === 0 ? "rounded-l-full" : ""} ${
+                step === 3 ? "rounded-r-full" : ""
               }`}
             />
           ))}
@@ -175,7 +185,9 @@ const Record = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
                 {errors.birthDate && (
-                  <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.birthDate}
+                  </p>
                 )}
               </div>
 
@@ -281,7 +293,7 @@ const Record = () => {
             <button
               onClick={handleNext}
               className={`px-6 py-2 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors ${
-                currentStep === 0 ? 'ml-auto' : ''
+                currentStep === 0 ? "ml-auto" : ""
               }`}
             >
               {currentStep === 3 ? "완료하기" : "다음으로"}
