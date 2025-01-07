@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./commom.css";
 import "./photodetail.css";
+import ProfileTab from "./ProfileTab";
 
 const PhotoDetail = () => {
   const [photo, setPhoto] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
+
   // 사용자 정보 불러오기
   useEffect(() => {
     axios
@@ -52,25 +56,39 @@ const PhotoDetail = () => {
   return (
     <div className="detail-container">
       <div className="navbar">
-        <div
-          className="logo"
-          onClick={() => navigate("/dashboard")}
-          style={{ cursor: "pointer" }}
-        >
+        <div className="logo" onClick={() => navigate("/dashboard")}>
           Re:PET
         </div>
         <div className="nav-links">
-          <span onClick={() => navigate("/record")}>기록하기</span>
-          <span onClick={() => navigate("/remember")}>추억하기</span>
-          <span onClick={() => navigate("/chat")}>대화하기</span>
+          <span
+            className={location.pathname === "/record" ? "active" : ""}
+            onClick={() => navigate("/record")}
+          >
+            기록하기
+          </span>
+          <span
+            className={location.pathname === "/remember" ? "active" : ""}
+            onClick={() => navigate("/remember")}
+          >
+            추억하기
+          </span>
+          <span
+            className={location.pathname === "/chat" ? "active" : ""}
+            onClick={() => navigate("/chat")}
+          >
+            대화하기
+          </span>
         </div>
         <div className="profile">
-          {/* 사용자 프로필 이미지 */}
           <img
-            src={user?.picture ? user.picture : "/default-profile.png"}
+            src={user?.picture || "/default-profile.png"}
             alt="User"
             className="profile-pic"
+            onClick={() => setShowProfileTab(!showProfileTab)}
           />
+          {showProfileTab && (
+            <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
+          )}
         </div>
       </div>
 
