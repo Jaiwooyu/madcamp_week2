@@ -18,6 +18,10 @@ module.exports = {
         }
       },
       keyframes: {
+        bounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
@@ -26,6 +30,7 @@ module.exports = {
       animation: {
         'float': 'float 6s ease-in-out infinite',
         'float-delayed': 'float 6s ease-in-out 2s infinite',
+        bounce: 'bounce 1s infinite',
       }
     },
   },
