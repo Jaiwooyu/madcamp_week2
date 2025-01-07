@@ -1,12 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
+<<<<<<< HEAD
 
 const PhotoDetail = () => {
  const [photo, setPhoto] = useState(null);
  const { id } = useParams();
  const navigate = useNavigate();
  const [user, setUser] = useState(null);
+=======
+import "./commom.css";
+import "./photodetail.css";
+import ProfileTab from "./ProfileTab";
+
+const PhotoDetail = () => {
+  const [photo, setPhoto] = useState(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
+
+  // 사용자 정보 불러오기
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/user", { withCredentials: true })
+      .then((response) => {
+        setUser(response.data); // 사용자 데이터 저장
+      })
+      .catch(() => {
+        navigate("/"); // 로그인되지 않은 경우 홈으로 리디렉트
+      });
+  }, [navigate]);
+>>>>>>> main
 
  useEffect(() => {
    axios
@@ -45,7 +71,48 @@ const PhotoDetail = () => {
    }
  };
 
+<<<<<<< HEAD
  if (!photo) return null;
+=======
+  return (
+    <div className="detail-container">
+      <div className="navbar">
+        <div className="logo" onClick={() => navigate("/dashboard")}>
+          Re:PET
+        </div>
+        <div className="nav-links">
+          <span
+            className={location.pathname === "/record" ? "active" : ""}
+            onClick={() => navigate("/record")}
+          >
+            기록하기
+          </span>
+          <span
+            className={location.pathname === "/remember" ? "active" : ""}
+            onClick={() => navigate("/remember")}
+          >
+            추억하기
+          </span>
+          <span
+            className={location.pathname === "/chat" ? "active" : ""}
+            onClick={() => navigate("/chat")}
+          >
+            대화하기
+          </span>
+        </div>
+        <div className="profile">
+          <img
+            src={user?.picture || "/default-profile.png"}
+            alt="User"
+            className="profile-pic"
+            onClick={() => setShowProfileTab(!showProfileTab)}
+          />
+          {showProfileTab && (
+            <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
+          )}
+        </div>
+      </div>
+>>>>>>> main
 
  return (
    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50">

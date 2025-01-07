@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -13,6 +14,24 @@ const Chat = () => {
  const chatEndRef = useRef(null);
  const navigate = useNavigate();
  const petId = 3;
+=======
+import "./commom.css";
+import "./chat.css";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import ProfileTab from "./ProfileTab";
+
+const Chat = () => {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [user, setUser] = useState(null);
+  const chatEndRef = useRef(null);
+  const navigate = useNavigate();
+  const petId = 3; // 동적으로 받아오는 방식으로 수정 가능
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
+>>>>>>> main
 
  useEffect(() => {
    axios
@@ -222,6 +241,7 @@ const Chat = () => {
          </div>
        </div>
 
+<<<<<<< HEAD
        {/* Input Area */}  
        <div className="flex gap-3">
          <input
@@ -242,6 +262,152 @@ const Chat = () => {
      </div>
    </div>
  );
+=======
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsTyping(true);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/chat/${petId}/message`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: input }),
+        }
+      );
+      const data = await response.json();
+
+      const botMessage = {
+        role: "assistant",
+        content: data.petResponse,
+        timestamp: new Date().toISOString(),
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error("메시지 전송 실패:", error);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  useEffect(() => {
+    if (window.location.pathname !== "/chat") {
+      window.history.pushState({}, "", "/chat");
+    }
+  }, []);
+
+  const handleNavigation = (path) => {
+    window.history.pushState({}, "", `/${path}`);
+    window.location.reload();
+  };
+
+  return (
+    <div className="chat-container">
+      <div className="navbar">
+        <div className="logo" onClick={() => navigate("/dashboard")}>
+          Re:PET
+        </div>
+        <div className="nav-links">
+          <span
+            className={location.pathname === "/record" ? "active" : ""}
+            onClick={() => navigate("/record")}
+          >
+            기록하기
+          </span>
+          <span
+            className={location.pathname === "/remember" ? "active" : ""}
+            onClick={() => navigate("/remember")}
+          >
+            추억하기
+          </span>
+          <span
+            className={location.pathname === "/chat" ? "active" : ""}
+            onClick={() => navigate("/chat")}
+          >
+            대화하기
+          </span>
+        </div>
+        <div className="profile">
+          <img
+            src={user?.picture || "/default-profile.png"}
+            alt="User"
+            className="profile-pic"
+            onClick={() => setShowProfileTab(!showProfileTab)}
+          />
+          {showProfileTab && (
+            <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
+          )}
+        </div>
+      </div>
+
+      <div className="chat-box">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`message ${
+              message.role === "user" ? "user-message" : "assistant-message"
+            }`}
+          >
+            {message.role !== "user" && (
+              <div className="avatar">
+                <img
+                  src={`http://localhost:8080${
+                    pet?.imageUrl || "/default-pet.png"
+                  }`}
+                  alt={`${pet?.name || "기본 펫"}`}
+                />
+              </div>
+            )}
+            <div className="text">{message.content}</div>
+          </div>
+        ))}
+        {isTyping && (
+          <div className="message assistant-message">
+            <div className="avatar">
+              <img
+                src={`http://localhost:8080${
+                  pet?.imageUrl || "/default-pet.png"
+                }`}
+                alt={`${pet?.name || "기본 펫"}`}
+              />
+            </div>
+            <div className="text typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        )}
+        <div ref={chatEndRef} />
+      </div>
+
+      <div className="input-box">
+        <input
+          type="text"
+          placeholder="메시지를 입력하세요..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        <button onClick={sendMessage} className="send-button">
+          전송
+        </button>
+      </div>
+    </div>
+  );
+>>>>>>> main
 };
 
 export default Chat;

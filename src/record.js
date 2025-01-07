@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+=======
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./commom.css";
+import "./record.css";
+>>>>>>> main
 import axios from "axios";
+import ProfileTab from "./ProfileTab";
 
 const Record = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +28,8 @@ const Record = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [showProfileTab, setShowProfileTab] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -87,6 +97,7 @@ const Record = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50">
       {/* Navbar */}
       <nav className="bg-white shadow-md px-6 py-4">
@@ -96,6 +107,92 @@ const Record = () => {
             onClick={() => navigate("/dashboard")}
           >
             Re:PET
+=======
+    <div className="dashboard">
+      <div className="navbar">
+        <div className="logo" onClick={() => navigate("/dashboard")}>
+          Re:PET
+        </div>
+        <div className="nav-links">
+          <span
+            className={location.pathname === "/record" ? "active" : ""}
+            onClick={() => navigate("/record")}
+          >
+            기록하기
+          </span>
+          <span
+            className={location.pathname === "/remember" ? "active" : ""}
+            onClick={() => navigate("/remember")}
+          >
+            추억하기
+          </span>
+          <span
+            className={location.pathname === "/chat" ? "active" : ""}
+            onClick={() => navigate("/chat")}
+          >
+            대화하기
+          </span>
+        </div>
+        <div className="profile">
+          <img
+            src={user?.picture || "/default-profile.png"}
+            alt="User"
+            className="profile-pic"
+            onClick={() => setShowProfileTab(!showProfileTab)}
+          />
+          {showProfileTab && (
+            <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
+          )}
+        </div>
+      </div>
+
+      <div className="record-container">
+        <h1 className="record-title">반려 가족 기억하기</h1>
+        {currentStep === 0 && (
+          <div className="record-form">
+            <input
+              type="text"
+              placeholder="이름"
+              value={formData.name}
+              onChange={(e) => handleInputChange(e, "name")}
+            />
+            {errors.name && <div className="error-message">{errors.name}</div>}
+
+            <input
+              type="text"
+              placeholder="출생 (yyyy.mm.dd)"
+              value={formData.birthDate}
+              onChange={(e) => handleInputChange(e, "birthDate")}
+            />
+            {errors.birthDate && (
+              <div className="error-message">{errors.birthDate}</div>
+            )}
+
+            <input
+              type="text"
+              placeholder="종"
+              value={formData.species}
+              onChange={(e) => handleInputChange(e, "species")}
+            />
+            {errors.species && (
+              <div className="error-message">{errors.species}</div>
+            )}
+
+            <input
+              type="text"
+              placeholder="성별"
+              value={formData.gender}
+              onChange={(e) => handleInputChange(e, "gender")}
+            />
+            {errors.gender && (
+              <div className="error-message">{errors.gender}</div>
+            )}
+
+            <input type="file" onChange={handleFileChange} />
+            {errors.image && (
+              <div className="error-message">{errors.image}</div>
+            )}
+>>>>>>> main
           </div>
 
           <div className="flex items-center space-x-8">

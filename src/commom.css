@@ -1,131 +1,208 @@
 /* common.css */
 
 @font-face {
-    font-family: "Inria Serif-Regular";
-    src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: "Inria Serif-Bold";
-    src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  /* Reset CSS */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Inria Serif-Regular', serif;
-    background-color: #FFFFFF;
-    min-height: 100vh;
-  }
-  
-  /* Common Layout */
-  .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* Navbar Styling */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #E5E5E5;
-    height: 70px;
-    z-index: 1000;
-  }
-  
-  .logo {
-    font-family: 'Inria Serif-Bold', serif;
-    font-size: 1.5rem;
-    color: #333333;
-    cursor: pointer;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 3rem;
-    margin: 0 2rem;
-  }
-  
-  .nav-links span {
-    font-family: 'Inria Serif-Regular', serif;
-    font-size: 1rem;
-    color: #666666;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links span:hover {
-    color: #333333;
-  }
-  
-  .nav-links span.active {
-    font-family: 'Inria Serif-Bold', serif;
-    color: #333333;
-  }
-  
-  /* Profile Section */
-  .profile {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #E5E5E5;
-  }
-  
-  /* Common Content Area */
-  .content {
-    margin-top: 70px; /* navbar height */
-    padding: 2rem;
-    flex: 1;
-  }
-  
-  /* Common Button Styles */
-  .button {
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 2rem;
-    font-family: 'Inria Serif-Regular', serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .primary-button {
-    background-color: #FFE4B5;
-    color: #333333;
-  }
-  
-  .primary-button:hover {
-    background-color: #FFD700;
-  }
-  
-  .secondary-button {
-    background-color: #F5F5F5;
-    color: #666666;
-  }
-  
-  .secondary-button:hover {
-    background-color: #E5E5E5;
-  }
+  font-family: "Inria Serif-Regular";
+  src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inria Serif-Bold";
+  src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inria Serif-Regular", serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+/* Common Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar Styling */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  height: 70px;
+  z-index: 1000;
+}
+
+.logo {
+  font-family: "Inria Serif-Bold", serif;
+  font-size: 1.5rem;
+  color: #333333;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  margin: 0 2rem;
+}
+
+.nav-links span {
+  font-family: "Inria Serif-Regular", serif;
+  font-size: 1rem;
+  color: #666666;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-links span:hover {
+  color: #333333;
+}
+
+.nav-links span.active {
+  font-family: "Inria Serif-Bold", serif;
+  color: #333333;
+}
+
+/* Profile Section */
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e5e5e5;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.profile-pic:hover {
+  transform: scale(1.1);
+}
+
+.profile-tab {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  z-index: 1100;
+}
+
+.profile-tab-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.profile-tab-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-tab-info {
+  flex: 1;
+}
+
+.profile-tab-name {
+  font-family: "Inria Serif-Bold", serif;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.2rem;
+}
+
+.profile-tab-email {
+  font-family: "Inria Serif-Regular", serif;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.profile-tab-logout {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  width: 100%;
+  background-color: #ffe4e1;
+  color: #ff6b6b;
+  border: none;
+  border-radius: 8px;
+  font-family: "Inria Serif-Regular", serif;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.profile-tab-logout:hover {
+  background-color: #ffb6c1;
+}
+
+.profile-tab-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 1050;
+}
+
+/* Common Content Area */
+.content {
+  margin-top: 70px; /* navbar height */
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Common Button Styles */
+.button {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 2rem;
+  font-family: "Inria Serif-Regular", serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary-button {
+  background-color: #ffe4b5;
+  color: #333333;
+}
+
+.primary-button:hover {
+  background-color: #ffd700;
+}
+
+.secondary-button {
+  background-color: #f5f5f5;
+  color: #666666;
+}
+
+.secondary-button:hover {
+  background-color: #e5e5e5;
+}
