@@ -7,7 +7,7 @@ import axios from "axios";
 const Splash = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  // 사용자 정보 불러오기
+  // 사용자 정보 불러오기,
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user", { withCredentials: true })
