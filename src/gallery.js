@@ -122,8 +122,8 @@ const Gallery = () => {
               <div>
                 <img
                   src={pawImage}
-                  alt="강아지 발바닥"
-                  className="w-24 h-24 mx-auto mb-6 object-cover rounded-full"
+                  alt="photo album"
+                  className="w-40 h-40 mx-auto mb-6 object-cover rounded-full"
                 />
                 <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
                   "우리 그 때 기억나?"
