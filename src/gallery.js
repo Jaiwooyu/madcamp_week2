@@ -1,14 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileTab from "./ProfileTab";
+import pawImage from "./assets/images/paw.jpg"; // 이미지 import 추가
+
+const MasonryGallery = ({ photos, onPhotoClick }) => {
+  return (
+    <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      {photos.map((photo) => (
+        <div
+          key={photo.id}
+          onClick={() => onPhotoClick(photo.id)}
+          className="break-inside-avoid-column cursor-pointer transform transition-all duration-300 hover:scale-[1.02] mb-6"
+        >
+          <div className="bg-white rounded-2xl shadow-md overflow-hidden w-full">
+            <img
+              src={
+                photo.imageFileName
+                  ? `http://localhost:8080${photo.imageFileName}`
+                  : "default-image.png"
+              }
+              alt={photo.title}
+              className="w-full object-cover"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const Gallery = () => {
   const [photos, setPhotos] = useState([]);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [showProfileTab, setShowProfileTab] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -46,7 +72,7 @@ const Gallery = () => {
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div
-            className="text-2xl font-bold text-yellow-400 cursor-pointer hover:text-yellow-500 transition-colors"
+            className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
             Re:PET
@@ -81,56 +107,43 @@ const Gallery = () => {
               onClick={() => setShowProfileTab(!showProfileTab)}
             />
             {showProfileTab && (
-              <ProfileTab
-                user={user}
-                onClose={() => setShowProfileTab(false)}
-              />
+              <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
             )}
           </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left Section */}
-          <div className="lg:w-1/4">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                ~~이와의 추억
-              </h2>
-              <button
-                onClick={() => navigate("/photo/upload")}
-                className="w-full px-6 py-3 bg-yellow-400 text-white rounded-xl hover:bg-yellow-500 transition-colors shadow-md"
-              >
-                업로드하기
-              </button>
+      {/* Main Content with full height calculation */}
+      <div className="max-w-7xl mx-auto px-6 h-[calc(100vh-4rem)]">
+        <div className="flex gap-8 h-full py-8">
+          {/* Left Section - Fixed Width */}
+          <div className="w-72 flex-shrink-0 h-full">
+            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8 h-full flex flex-col justify-center">
+              <div>
+                <img
+                  src={pawImage}
+                  alt="강아지 발바닥"
+                  className="w-24 h-24 mx-auto mb-6 object-cover rounded-full"
+                />
+                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+                  "우리 그 때 기억나?"
+                </h2>
+                <p className="text-gray-600 text-center mb-8 text-sm leading-relaxed">
+                  반려 가족과의 추억을 올리고 모아보세요.
+                </p>
+                <button
+                  onClick={() => navigate("/photo/upload")}
+                  className="w-full px-6 py-3 bg-yellow-400 text-white rounded-xl hover:bg-yellow-500 transition-colors shadow-md"
+                >
+                  사진 업로드하기
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Right Section - Photo Grid */}
-          <div className="lg:w-3/4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {photos.map((photo) => (
-                <div
-                  key={photo.id}
-                  onClick={() => handlePhotoClick(photo.id)}
-                  className="cursor-pointer group"
-                >
-                  <div className="aspect-square overflow-hidden rounded-2xl shadow-md transition-transform duration-300 hover:scale-105">
-                    <img
-                      src={
-                        photo.imageFileName
-                          ? `http://localhost:8080${photo.imageFileName}`
-                          : "default-image.png"
-                      }
-                      alt={photo.title}
-                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Right Section - Masonry Gallery */}
+          <div className="flex-1 overflow-y-auto">
+            <MasonryGallery photos={photos} onPhotoClick={handlePhotoClick} />
           </div>
         </div>
       </div>
