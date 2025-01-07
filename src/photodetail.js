@@ -1,104 +1,140 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import "./commom.css";
-import "./photodetail.css";
 
 const PhotoDetail = () => {
-  const [photo, setPhoto] = useState(null);
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  // 사용자 정보 불러오기
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/user", { withCredentials: true })
-      .then((response) => {
-        setUser(response.data); // 사용자 데이터 저장
-      })
-      .catch(() => {
-        navigate("/"); // 로그인되지 않은 경우 홈으로 리디렉트
-      });
-  }, [navigate]);
+ const [photo, setPhoto] = useState(null);
+ const { id } = useParams();
+ const navigate = useNavigate();
+ const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    fetchPhotoDetail();
-  }, [id]);
+ useEffect(() => {
+   axios
+     .get("http://localhost:8080/api/user", { withCredentials: true })
+     .then((response) => {
+       setUser(response.data);
+     })
+     .catch(() => {
+       navigate("/");
+     });
+ }, [navigate]);
 
-  const fetchPhotoDetail = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/board/${id}`, {
-        withCredentials: true,
-      });
-      setPhoto(response.data);
-    } catch (error) {
-      console.error("사진 상세 정보 불러오기 실패:", error);
-    }
-  };
+ useEffect(() => {
+   fetchPhotoDetail();
+ }, [id]);
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:8080/board/${id}`, {
-        withCredentials: true,
-      });
-      navigate("/remember");
-    } catch (error) {
-      console.error("삭제 실패:", error);
-    }
-  };
+ const fetchPhotoDetail = async () => {
+   try {
+     const response = await axios.get(`http://localhost:8080/board/${id}`, {
+       withCredentials: true,
+     });
+     setPhoto(response.data);
+   } catch (error) {
+     console.error("사진 상세 정보 불러오기 실패:", error);
+   }
+ };
 
-  if (!photo) return null;
+ const handleDelete = async () => {
+   try {
+     await axios.delete(`http://localhost:8080/board/${id}`, {
+       withCredentials: true,
+     });
+     navigate("/remember");
+   } catch (error) {
+     console.error("삭제 실패:", error);
+   }
+ };
 
-  return (
-    <div className="detail-container">
-      <div className="navbar">
-        <div
-          className="logo"
-          onClick={() => navigate("/dashboard")}
-          style={{ cursor: "pointer" }}
-        >
-          Re:PET
-        </div>
-        <div className="nav-links">
-          <span onClick={() => navigate("/record")}>기록하기</span>
-          <span onClick={() => navigate("/remember")}>추억하기</span>
-          <span onClick={() => navigate("/chat")}>대화하기</span>
-        </div>
-        <div className="profile">
-          {/* 사용자 프로필 이미지 */}
-          <img
-            src={user?.picture ? user.picture : "/default-profile.png"}
-            alt="User"
-            className="profile-pic"
-          />
-        </div>
-      </div>
+ if (!photo) return null;
 
-      <div className="detail-content">
-        <div className="photo-content">
-          <img
-            src={
-              photo.imageFileName
-                ? `http://localhost:8080${photo.imageFileName}`
-                : "default-image.png"
-            }
-            alt={photo.title}
-          />
-          <h3>{photo.title}</h3>
-          <p>{photo.content}</p>
-        </div>
+ return (
+   <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50">
+     {/* Navbar */}
+     <nav className="bg-white shadow-md px-6 py-4">
+       <div className="max-w-7xl mx-auto flex items-center justify-between">
+         <div 
+           className="text-2xl font-bold text-yellow-400 cursor-pointer hover:text-yellow-500 transition-colors"
+           onClick={() => navigate("/dashboard")}
+         >
+           Re:PET
+         </div>
 
-        <div className="button-group">
-          <button onClick={() => navigate(`/remember`)} className="edit-button">
-            이전으로
-          </button>
-          <button onClick={handleDelete} className="delete-button">
-            삭제하기
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+         <div className="flex items-center space-x-8">
+           <button 
+             onClick={() => navigate("/record")}
+             className="text-gray-600 hover:text-yellow-400 transition-colors"
+           >
+             기록하기
+           </button>
+           <button 
+             onClick={() => navigate("/remember")}
+             className="text-gray-600 hover:text-yellow-400 transition-colors"
+           >
+             추억하기
+           </button>
+           <button 
+             onClick={() => navigate("/chat")}
+             className="text-gray-600 hover:text-yellow-400 transition-colors"
+           >
+             대화하기
+           </button>
+         </div>
+
+         <div className="relative">
+           <img
+             src={user?.picture || "/default-profile.png"}
+             alt="User"
+             className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors"
+           />
+         </div>
+       </div>
+     </nav>
+
+     {/* Main Content */}
+     <div className="max-w-4xl mx-auto px-4 py-8">
+       <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+         {/* Photo Section */}
+         <div className="aspect-video relative">
+           <img
+             src={
+               photo.imageFileName
+                 ? `http://localhost:8080${photo.imageFileName}`
+                 : "default-image.png"
+             }
+             alt={photo.title}
+             className="w-full h-full object-cover"
+           />
+         </div>
+
+         {/* Content Section */}
+         <div className="p-6">
+           <h3 className="text-2xl font-bold text-gray-800 mb-4">
+             {photo.title}
+           </h3>
+           <p className="text-gray-600 text-lg leading-relaxed mb-8">
+             {photo.content}
+           </p>
+
+           {/* Buttons */}
+           <div className="flex justify-between items-center">
+             <button
+               onClick={() => navigate(`/remember`)}
+               className="px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors"
+             >
+               이전으로
+             </button>
+             <button
+               onClick={handleDelete}
+               className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+             >
+               삭제하기
+             </button>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ );
 };
 
 export default PhotoDetail;
