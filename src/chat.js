@@ -1,23 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileTab from "./ProfileTab";
+import trash from "./assets/images/trash.png"; // 이미지 import 추가
 
 const Chat = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [user, setUser] = useState(null);
-  const [pet, setPet] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const chatEndRef = useRef(null);
-  const navigate = useNavigate();
-  const petId = 3;
-
+  const [pets, setPets] = useState([]);
   const [showProfileTab, setShowProfileTab] = useState(false);
-  const location = useLocation();
+  const navigate = useNavigate();
 
+  // 유저 정보 가져오기
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user", { withCredentials: true })
@@ -25,14 +18,13 @@ const Chat = () => {
       .catch(() => navigate("/"));
   }, [navigate]);
 
+  // 반려동물 정보 가져오기
   useEffect(() => {
     if (user) {
       axios
         .get("http://localhost:8080/api/pets", { withCredentials: true })
         .then((response) => {
-          if (response.data && response.data.length > 0) {
-            setPet(response.data[0]);
-          }
+          setPets(response.data);
         })
         .catch((error) => {
           console.error("펫 정보 불러오기 실패:", error);
@@ -40,89 +32,23 @@ const Chat = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  useEffect(() => {
-    const loadPreviousChat = async () => {
+  // 반려동물 삭제 처리
+  const handleDeletePet = async (petId) => {
+    if (window.confirm("정말로 이 반려동물의 정보를 삭제하시겠습니까?")) {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/chat/${petId}`,
-          { credentials: "include" }
-        );
-        const data = await response.json();
-        if (data) {
-          const parsedMessages = data
-            .map((item) => [
-              {
-                role: "user",
-                content: item.userMessage,
-                timestamp: item.createdAt,
-              },
-              {
-                role: "assistant",
-                content: item.petResponse,
-                timestamp: item.createdAt,
-              },
-            ])
-            .flat();
-          const sortedMessages = parsedMessages.sort(
-            (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-          );
-          setMessages(sortedMessages);
-        }
+        await axios.delete(`http://localhost:8080/api/pets/${petId}`, {
+          withCredentials: true,
+        });
+        setPets(pets.filter((pet) => pet.id !== petId));
       } catch (error) {
-        console.error("채팅 내역을 불러오는데 실패했습니다:", error);
+        console.error("펫 삭제 실패:", error);
       }
-    };
-    loadPreviousChat();
-  }, [petId]);
-
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const userMessage = {
-      role: "user",
-      content: input,
-      timestamp: new Date().toISOString(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsTyping(true);
-
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/chat/${petId}/message`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: input }),
-        }
-      );
-      const data = await response.json();
-
-      const botMessage = {
-        role: "assistant",
-        content: data.petResponse,
-        timestamp: new Date().toISOString(),
-      };
-
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("메시지 전송 실패:", error);
-    } finally {
-      setIsTyping(false);
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
+  // 채팅 시작
+  const handleChatStart = (petId) => {
+    navigate(`/chatdetail?petId=${petId}`);
   };
 
   return (
@@ -131,7 +57,7 @@ const Chat = () => {
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div
-            className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors"
+            className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
             Re:PET
@@ -175,80 +101,45 @@ const Chat = () => {
         </div>
       </nav>
 
-      {/* Chat Container */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        {/* Chat Messages */}
-        <div className="bg-white rounded-2xl shadow-lg p-4 mb-4 h-[calc(100vh-280px)] overflow-y-auto">
-          <div className="space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex items-start gap-3 ${
-                  message.role === "user" ? "flex-row-reverse" : ""
-                }`}
-              >
-                {message.role !== "user" && (
-                  <div className="flex-shrink-0">
-                    <img
-                      src={`http://localhost:8080${
-                        pet?.imageUrl || "/default-pet.png"
-                      }`}
-                      alt={pet?.name || "Pet"}
-                      className="w-10 h-10 rounded-full border-2 border-yellow-200"
-                    />
-                  </div>
-                )}
-                <div
-                  className={`px-4 py-2 rounded-2xl max-w-[70%] ${
-                    message.role === "user"
-                      ? "bg-yellow-400 text-white"
-                      : "bg-gray-100 text-gray-800"
-                  }`}
-                >
-                  {message.content}
-                </div>
-              </div>
-            ))}
-            {isTyping && (
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  <img
-                    src={`http://localhost:8080${
-                      pet?.imageUrl || "/default-pet.png"
-                    }`}
-                    alt={pet?.name || "Pet"}
-                    className="w-10 h-10 rounded-full border-2 border-yellow-200"
-                  />
-                </div>
-                <div className="px-4 py-2 rounded-2xl bg-gray-100">
-                  <div className="flex gap-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={chatEndRef} />
-          </div>
-        </div>
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <h1 className="text-3xl text-gray-800 text-center mb-2">
+          친구들이 보고 싶을 때,
+        </h1>
+        <h2 className="text-3xl text-gray-800 text-center mb-8">Re:PET</h2>
 
-        {/* Input Area */}
-        <div className="flex gap-3">
-          <input
-            type="text"
-            placeholder="메시지를 입력하세요..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          />
-          <button
-            onClick={sendMessage}
-            className="px-6 py-3 bg-yellow-400 text-white rounded-xl hover:bg-yellow-500 transition-colors"
-          >
-            전송
-          </button>
+        {/* Pet Cards */}
+        <div className="space-y-4">
+          {pets.map((pet) => (
+            <div
+              key={pet.id}
+              className="bg-white rounded-xl shadow-md p-4 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleChatStart(pet.id)}
+            >
+              <div className="flex items-center space-x-4">
+                <img
+                  src={`http://localhost:8080${pet.imageUrl}`}
+                  alt={pet.name}
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <span className="text-xl font-medium text-gray-800">
+                  {pet.name}
+                </span>
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeletePet(pet.id);
+                }}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <img
+                  src={trash}
+                  className="w-5 h-5 text-gray-500 hover:text-red-500"
+                />
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </div>

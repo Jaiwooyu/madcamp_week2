@@ -12,12 +12,12 @@ export const Homepage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50 relative">
+    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50">
       {/* Navbar */}
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="text-2xl font-bold text-black-400 cursor-pointer hover:text-black-500 transition-colors">
+          <div className="h-10 flex items-center justify-content text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors">
             Re:PET
           </div>
 

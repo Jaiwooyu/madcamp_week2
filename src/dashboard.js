@@ -47,7 +47,7 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div
-            className="text-2xl font-bold text-black-400 cursor-pointer hover:text-black-500 transition-colors"
+            className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
             Re:PET
@@ -63,11 +63,7 @@ const Dashboard = () => {
             </button>
             <button
               onClick={() => {
-                if (pet) {
-                  navigate("/remember");
-                } else {
-                  alert("반려 가족 정보를 입력해주세요.");
-                }
+                navigate("/remember");
               }}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
@@ -75,11 +71,7 @@ const Dashboard = () => {
             </button>
             <button
               onClick={() => {
-                if (pet) {
-                  navigate("/chat");
-                } else {
-                  alert("반려 가족 정보를 입력해주세요.");
-                }
+                navigate("/chat");
               }}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >

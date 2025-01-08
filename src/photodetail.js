@@ -56,7 +56,7 @@ const PhotoDetail = () => {
       <nav className="bg-white shadow-md px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div
-            className="text-2xl font-bold text-yellow-400 cursor-pointer hover:text-yellow-500 transition-colors"
+            className="text-2xl font-bold text-black-400 cursor-pointer hover:text-black-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
             Re:PET
