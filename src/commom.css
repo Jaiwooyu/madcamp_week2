@@ -1,19 +1,5 @@
 /* common.css */
 
-@font-face {
-  font-family: "Inria Serif-Regular";
-  src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Inria Serif-Bold";
-  src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* Reset CSS */
 * {
   margin: 0;
@@ -22,7 +8,6 @@
 }
 
 body {
-  font-family: "Inria Serif-Regular", serif;
   background-color: #ffffff;
   min-height: 100vh;
 }

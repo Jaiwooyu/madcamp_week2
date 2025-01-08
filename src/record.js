@@ -24,6 +24,22 @@ const Record = () => {
   const navigate = useNavigate();
   const [showProfileTab, setShowProfileTab] = useState(false);
   const location = useLocation();
+  const [pet, setPet] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get("http://localhost:8080/api/pets", { withCredentials: true })
+        .then((response) => {
+          if (response.data && response.data.length > 0) {
+            setPet(response.data[0]);
+          }
+        })
+        .catch((error) => {
+          console.error("펫 정보 불러오기 실패:", error);
+        });
+    }
+  }, [user]);
 
   useEffect(() => {
     axios
@@ -57,7 +73,12 @@ const Record = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFormData({ ...formData, image: event.target.result });
+        // 미리보기용 이미지 URL과 파일을 따로 저장
+        setFormData({
+          ...formData,
+          image: file, // 서버 전송용 File 객체
+          imagePreview: event.target.result, // 미리보기용 base64 문자열
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -108,6 +129,7 @@ const Record = () => {
     Object.keys(formData).forEach((key) => {
       submitForm.append(key, formData[key]);
     });
+    console.log(formData);
 
     axios
       .post("http://localhost:8080/api/pets", submitForm, {
@@ -142,13 +164,25 @@ const Record = () => {
               기록하기
             </button>
             <button
-              onClick={() => navigate("/remember")}
+              onClick={() => {
+                if (pet) {
+                  navigate("/remember");
+                } else {
+                  alert("반려 가족 정보를 입력해주세요.");
+                }
+              }}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               추억하기
             </button>
             <button
-              onClick={() => navigate("/chat")}
+              onClick={() => {
+                if (pet) {
+                  navigate("/chat");
+                } else {
+                  alert("반려 가족 정보를 입력해주세요.");
+                }
+              }}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               대화하기
@@ -207,7 +241,7 @@ const Record = () => {
                 <div className="relative w-full h-60 p-3">
                   {formData.image ? (
                     <img
-                      src={formData.image}
+                      src={formData.imagePreview}
                       alt="Uploaded Preview"
                       className="w-full h-full object-cover rounded-lg"
                     />

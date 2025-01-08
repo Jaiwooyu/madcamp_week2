@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import ProfileTab from "./ProfileTab";
+import dogimg from "./assets/images/dog.png"; // 이미지 import 추가
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -61,13 +62,25 @@ const Dashboard = () => {
               기록하기
             </button>
             <button
-              onClick={() => navigate("/remember")}
+              onClick={() => {
+                if (pet) {
+                  navigate("/remember");
+                } else {
+                  alert("반려 가족 정보를 입력해주세요.");
+                }
+              }}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               추억하기
             </button>
             <button
-              onClick={() => navigate("/chat")}
+              onClick={() => {
+                if (pet) {
+                  navigate("/chat");
+                } else {
+                  alert("반려 가족 정보를 입력해주세요.");
+                }
+              }}
               className="text-gray-600 hover:text-yellow-400 transition-colors"
             >
               대화하기
@@ -138,7 +151,7 @@ const Dashboard = () => {
           </div>
         ) : (
           // Welcome Section
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center grid grid-cols-2">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-inria-bold text-gray-800 mb-2">
                 안녕, 나의 친구
@@ -154,9 +167,9 @@ const Dashboard = () => {
               </button>
             </div>
             <img
-              src="/golden-retriever.png"
+              src={dogimg}
               alt="골든 리트리버"
-              className="max-w-md w-full h-auto"
+              className="max-w-md rounded-3xl w-full h-auto"
             />
           </div>
         )}
