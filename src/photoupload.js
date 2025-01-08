@@ -4,12 +4,14 @@ import axios from "axios";
 import "./commom.css";
 import "./photoupload.css";
 import ProfileTab from "./ProfileTab";
+import previmg from "./assets/images/image_preview.png"; // 기본 이미지 import 추가
 
 const PhotoUpload = () => {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     image: null,
+    imagePreview: null, // 이미지 프리뷰를 위한 state 추가
   });
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -21,10 +23,10 @@ const PhotoUpload = () => {
     axios
       .get("http://localhost:8080/api/user", { withCredentials: true })
       .then((response) => {
-        setUser(response.data); // 사용자 데이터 저장
+        setUser(response.data);
       })
       .catch(() => {
-        navigate("/"); // 로그인되지 않은 경우 홈으로 리디렉트
+        navigate("/");
       });
   }, [navigate]);
 
@@ -37,10 +39,18 @@ const PhotoUpload = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      image: e.target.files[0],
-    }));
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData({
+          ...formData,
+          image: file,
+          imagePreview: event.target.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async () => {
@@ -72,7 +82,7 @@ const PhotoUpload = () => {
         <div
           className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors"
           onClick={() => navigate("/dashboard")}
-          style={{ cursor: "pointer", color : "black" }}
+          style={{ cursor: "pointer", color: "black" }}
         >
           Re:PET
         </div>
@@ -95,44 +105,72 @@ const PhotoUpload = () => {
       </div>
 
       <div className="upload-content">
-  <h2 style={{ 
-    color: '#1f2937',
-    paddingTop: '70px',    // 상단 패딩만 적용
-    paddingBottom: '10px', // 하단 패딩 줄임
-    marginBottom: '0'      // 마진 제거
-  }}>
-    반려 가족 추억하기
-  </h2>
-  <p style={{
-    marginTop: '10px'     // p 태그의 상단 마진만 적용
-  }}>
-    떠나간 내 가족과의 순간으로 사진으로 추억해보아요
-  </p>
+      <h1 className="text-3xl text-gray-800 text-center mb-2">
+          반려 가족 추억하기
+        </h1>
+        <h2 className="text-xl text-gray-800 text-center mb-8">
+          떠나간 내 가족과의 순간으로 사진으로 추억해보아요
+        </h2>
 
         <div className="upload-form">
-          <div className="image-upload">
-            <input type="file" onChange={handleFileChange} accept="image/*" />
+          {/* 이미지 업로드 영역 수정 */}
+          <div className="relative w-full h-60 p-3 mb-4">
+            {formData.imagePreview ? (
+              <img
+                src={formData.imagePreview}
+                alt="Uploaded Preview"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
+                <img src={previmg} alt="Default Icon" className="w-40" />
+              </div>
+            )}
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+            />
           </div>
+          {/* 파일 선택 버튼 */}
+          <div className="flex justify-center items-center mb-4">
+            <button
+              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors"
+              onClick={() => document.querySelector('input[type="file"]').click()}
+            >
+              사진 업로드
+            </button>
+          </div>
+
           <input
             type="text"
             name="title"
             placeholder="제목"
             value={formData.title}
             onChange={handleInputChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-4"
           />
           <textarea
             name="content"
             placeholder="사진에는 어떤 추억이 담겨 있나요?"
             value={formData.content}
             onChange={handleInputChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 min-h-32"
           />
         </div>
 
-        <div className="button-group">
-          <button onClick={() => navigate("/remember")} className="back-button">
+        <div className="button-group mt-8">
+          <button
+            onClick={() => navigate("/remember")}
+            className="px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors"
+          >
             이전으로
           </button>
-          <button onClick={handleSubmit} className="submit-button">
+          <button
+            onClick={handleSubmit}
+            className="px-6 py-2 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors"
+          >
             완료하기
           </button>
         </div>
