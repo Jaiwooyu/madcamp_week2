@@ -6,80 +6,75 @@ import image1 from "../assets/images/rainbow.png";
 
 export const Homepage = () => {
   const [htmlContent, setHtmlContent] = useState("");
-  
+
   const handleButtonClick = async () => {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50 relative overflow-hidden">
-      {/* Main content container */}
-      <div className="max-w-6xl mx-auto px-4 py-12 relative z-10">
-        
-        {/* Hero section */}
-        <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-yellow-400 mb-4 tracking-wide">
+    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-gray-50 relative">
+      {/* Navbar */}
+      <nav className="bg-white shadow-md px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Logo */}
+          <div className="text-2xl font-bold text-black-400 cursor-pointer hover:text-black-500 transition-colors">
             Re:PET
-          </h1>
-          <button 
-            onClick={() => handleButtonClick("login")}
-            className="px-8 py-3 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors duration-300 shadow-lg"
+          </div>
+
+          {/* Empty middle section for spacing */}
+          <div className="flex-1"></div>
+
+          {/* Login Button (positioned like profile picture) */}
+          <button
+            onClick={handleButtonClick}
+            className="text-gray-600 hover:text-yellow-400 transition-colors"
           >
             로그인하기
           </button>
         </div>
+      </nav>
 
-        {/* Info section */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl max-w-2xl mx-auto border border-yellow-100">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-semibold text-gray-700">
-              Re:PET 은?
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              무지개 다리를 건넌 반려 가족을<br />
+      {/* Main Content */}
+      <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
+        {/* Cloud Decorations */}
+        <img
+          src={effectCloud1}
+          alt="Cloud 1"
+          className="absolute top-20 left-[10%] w-48 opacity-80 animate-float"
+        />
+        <img
+          src={effectCloud2}
+          alt="Cloud 2"
+          className="absolute top-40 right-[15%] w-52 opacity-80 animate-float-delayed"
+        />
+        <img
+          src={effectCloud3}
+          alt="Cloud 3"
+          className="absolute bottom-40 left-[20%] w-44 opacity-80 animate-float"
+        />
+
+        {/* Text Content */}
+        <div className="text-center z-10 mt-20">
+          <div className="mb-16">
+            <h1 className="text-6xl mb-8">Re:PET은?</h1>
+            <p className="text-2xl text-gray-700 leading-relaxed">
+              무지개 다리를 건넌 반려 가족을
+              <br />
               다시 만나고, 추억할 수 있는 공간입니다.
             </p>
-            <button
-              onClick={() => handleButtonClick("start")}
-              className="w-full px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-300 text-white rounded-xl hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 shadow-lg text-lg font-medium"
-            >
-              시작하기
-            </button>
           </div>
+          <button
+            onClick={() => handleButtonClick("start")}
+            className="px-8 py-3 bg-yellow-200 text-gray-700 rounded-full hover:bg-yellow-300 transition-all duration-300"
+          >
+            구글 계정으로 시작하기
+          </button>
         </div>
 
-        {/* Decorative clouds */}
-        <div className="absolute top-20 left-10 w-32 h-32 opacity-40 animate-float">
-          <img 
-            src={effectCloud1} 
-            alt="Cloud 1" 
-            className="w-full h-full object-contain filter brightness-110"
-          />
+        {/* Rainbow Image */}
+        <div className="absolute bottom-0 right-0 w-96">
+          <img src={image1} alt="Rainbow" className="w-full h-auto" />
         </div>
-        <div className="absolute top-40 right-20 w-40 h-40 opacity-50 animate-float-delayed">
-          <img 
-            src={effectCloud2} 
-            alt="Cloud 2" 
-            className="w-full h-full object-contain filter brightness-105"
-          />
-        </div>
-        <div className="absolute bottom-20 left-1/4 w-36 h-36 opacity-30 animate-float">
-          <img 
-            src={effectCloud3} 
-            alt="Cloud 3" 
-            className="w-full h-full object-contain filter brightness-110"
-          />
-        </div>
-      </div>
-
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={image1} 
-          alt="Rainbow background" 
-          className="w-full h-full object-cover opacity-20" 
-        />
-        <div className="absolute inset-0 bg-yellow-50/30"></div>
       </div>
 
       {/* Server HTML content */}

@@ -26,23 +26,19 @@ const Chat = () => {
   }, [navigate]);
 
   useEffect(() => {
-    const fetchPet = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/pets/${petId}`,
-          { credentials: "include" }
-        );
-        if (!response.ok) throw new Error("Failed to fetch pet data");
-        const data = await response.json();
-        setPet(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPet();
-  }, [petId]);
+    if (user) {
+      axios
+        .get("http://localhost:8080/api/pets", { withCredentials: true })
+        .then((response) => {
+          if (response.data && response.data.length > 0) {
+            setPet(response.data[0]);
+          }
+        })
+        .catch((error) => {
+          console.error("펫 정보 불러오기 실패:", error);
+        });
+    }
+  }, [user]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });

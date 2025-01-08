@@ -107,7 +107,10 @@ const Gallery = () => {
               onClick={() => setShowProfileTab(!showProfileTab)}
             />
             {showProfileTab && (
-              <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
+              <ProfileTab
+                user={user}
+                onClose={() => setShowProfileTab(false)}
+              />
             )}
           </div>
         </div>
@@ -117,7 +120,7 @@ const Gallery = () => {
       <div className="max-w-7xl mx-auto px-6 h-[calc(100vh-4rem)]">
         <div className="flex gap-8 h-full py-8">
           {/* Left Section - Fixed Width */}
-          <div className="w-72 flex-shrink-0 h-full">
+          <div className="w-76 flex-shrink-0 h-full">
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8 h-full flex flex-col justify-center">
               <div>
                 <img

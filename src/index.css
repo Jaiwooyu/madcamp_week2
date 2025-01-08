@@ -1,217 +1,62 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @font-face {
   font-family: "Inria Serif-Regular";
-  src: url("./assets/fonts/InriaSerif-Regular.ttf") format("truetype");
+  src: url("./assets/fonts/GmarketSansTTFMedium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Inria Serif-Bold";
-  src: url("./assets/fonts/InriaSerif-Bold.ttf") format("truetype");
+  src: url("./assets/fonts/GmarketSansTTFMedium.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  font-family: 'Inria Serif-Regular';
-  background-color: white;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", "맑은 고딕", "Malgun Gothic", sans-serif;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.font-inria {
+  font-family: "Inria Serif-Regular", -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", "맑은 고딕", "Malgun Gothic",
+    sans-serif;
 }
 
-.screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  overflow-y: auto; /* Enable vertical scrolling */
+.font-inria-bold {
+  font-family: "Inria Serif-Bold", -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", "맑은 고딕", "Malgun Gothic",
+    sans-serif;
 }
 
-.screen::-webkit-scrollbar {
-  width: 10px;
-}
-
-.screen::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #f6a623, #f57c00);
-  border-radius: 5px;
-}
-
-.screen::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #f57c00, #f6a623);
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-.nav-logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  text-decoration: none;
-  font-size: 16px;
-  color: #666;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #333;
-}
-
-.overlap {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  text-align: center;
-  margin-top: 80px; /* Account for navbar height */
-}
-
-.image {
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 250px;
-}
-
-@media (max-width: 768px) {
-  .image {
-    width: 150px;
-    top: 80px;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
   }
 }
 
-.group {
-  position: absolute;
-  top: 10px;
-  left: 20px;
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-.overlap-group .text-wrapper {
-  font-size: 32px;
-  font-weight: bold;
-  color: #333;
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 2s;
 }
 
-.div {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 14px;
-  color: #666;
-  cursor: pointer;
+/* 구름에 hover 효과 추가 */
+.cloud-hover {
+  transition: transform 0.3s ease;
 }
 
-.vector {
-  margin-top: 20px;
-  width: 100px;
-}
-
-.effect-cloud {
-  position: absolute;
-  top: 150px;
-  left: 10%;
-  width: 150px;
-}
-
-.effect-cloud-2 {
-  position: absolute;
-  bottom: 20%;
-  right: 10%;
-  width: 150px;
-}
-
-.overlap-2 {
-  text-align: center;
-  margin-top: 200px;
-}
-
-.re-PET .span {
-  font-size: 48px;
-  font-weight: bold;
-  color: #333;
-}
-
-.re-PET .text-wrapper-2,
-.re-PET .text-wrapper-3,
-.re-PET .text-wrapper-4 {
-  font-size: 20px;
-  color: #555;
-  line-height: 1.6;
-}
-
-.rectangle {
-  margin: 30px auto;
-  width: 200px;
-  cursor: pointer;
-}
-
-.text-wrapper-5 {
-  font-size: 16px;
-  color: #fff;
-  background: linear-gradient(90deg, #f6a623, #f57c00);
-  padding: 12px 30px;
-  border-radius: 25px;
-  display: inline-block;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.text-wrapper-5:hover {
-  background: linear-gradient(90deg, #f57c00, #f6a623);
-  transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-  .overlap {
-    padding: 10px;
-  }
-
-  .overlap-group .text-wrapper {
-    font-size: 24px;
-  }
-
-  .text-wrapper-5 {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
-
-  .re-PET .span {
-    font-size: 36px;
-  }
+.cloud-hover:hover {
+  transform: scale(1.1);
 }

@@ -46,7 +46,7 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div
-            className="text-2xl font-bold text-yellow-400 cursor-pointer hover:text-yellow-500 transition-colors"
+            className="text-2xl font-bold text-black-400 cursor-pointer hover:text-black-500 transition-colors"
             onClick={() => navigate("/dashboard")}
           >
             Re:PET
@@ -93,61 +93,71 @@ const Dashboard = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8 pt-24">
+        {/* 상단 여백 추가 */}
         {pet ? (
-          // Pet Chat Section
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              {/* Pet Image */}
-              <div className="w-48 h-48 rounded-full overflow-hidden flex-shrink-0 border-4 border-yellow-100">
-                <img
-                  src={`http://localhost:8080${
-                    pet.imageUrl || "/default-pet.png"
-                  }`}
-                  alt="반려동물"
-                  className="w-full h-full object-cover"
-                />
+          // Pet Chat Section with Polaroid style
+          <div className="flex justify-center items-center gap-0">
+            {" "}
+            {/* justify-between을 center로 변경하고 gap 추가 */}
+            {/* Polaroid Section - left side */}
+            <div className="relative flex-shrink-0 ml-20">
+              {" "}
+              {/* 왼쪽 마진 추가 */}
+              {/* White Polaroid frame behind */}
+              <div className="absolute -left-4 -top-4 w-[500px] h-[600px] bg-white rounded-lg shadow-lg transform rotate-[-2deg]"></div>
+              {/* Main Polaroid frame */}
+              <div className="relative w-[500px] h-[600px] bg-white rounded-lg shadow-xl p-6">
+                {/* Image container */}
+                <div className="w-full h-[500px] bg-gray-100">
+                  <img
+                    src={`http://localhost:8080${
+                      pet.imageUrl || "/default-pet.png"
+                    }`}
+                    alt="반려동물"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
-
-              {/* Chat Info */}
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                  "친구야, 잘 지냈어?"
-                </h2>
-                <button
-                  onClick={() => navigate("/chat")}
-                  className="px-8 py-3 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors shadow-md"
-                >
-                  대화하기
-                </button>
-              </div>
+            </div>
+            {/* Text and Button Section - right side */}
+            <div className="flex flex-col items-center justify-center flex-1">
+              <h2 className="text-4xl font-inria-bold text-gray-800 mb-10">
+                "친구야, 잘 지냈어?"
+              </h2>
+              <h3 className="text-2xl font-inria-bold text-gray-800 mb-4">
+                오랜만에 같이 대화를 나눠보세요
+              </h3>
+              <button
+                onClick={() => navigate("/chat")}
+                className="px-10 py-4 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors shadow-md text-lg"
+              >
+                대화하기
+              </button>
             </div>
           </div>
         ) : (
           // Welcome Section
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl p-8 text-center mb-8">
-              <h2 className="text-3xl font-semibold text-gray-800 mb-2">
+          <div className="flex flex-col items-center justify-center">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-inria-bold text-gray-800 mb-2">
                 안녕, 나의 친구
               </h2>
-              <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+              <h2 className="text-3xl font-inria-bold text-gray-800 mb-6">
                 잘 가, 나의 가족
               </h2>
               <button
                 onClick={() => navigate("/record")}
-                className="px-8 py-3 bg-gradient-to-r from-yellow-400 to-yellow-300 text-white rounded-full hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 shadow-lg"
+                className="px-8 py-3 bg-yellow-400 text-white rounded-full hover:bg-yellow-500 transition-colors shadow-md"
               >
                 반려 가족 정보 기록하기
               </button>
             </div>
-
-            <div className="flex justify-center">
-              <img
-                src="/golden-retriever.png"
-                alt="골든 리트리버"
-                className="max-w-md w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
+            <img
+              src="/golden-retriever.png"
+              alt="골든 리트리버"
+              className="max-w-md w-full h-auto"
+            />
           </div>
         )}
       </main>
