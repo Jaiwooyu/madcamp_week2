@@ -38,7 +38,8 @@
   .upload-content {
     max-width: 42rem;  /* max-w-2xl */
     margin: 2rem auto;
-    padding: 0 1rem;  /* px-4 */
+    padding: 1rem;  /* px-4 */
+    margin-top: 90px;
   }
   
   .upload-content h2 {
@@ -46,12 +47,13 @@
     font-weight: bold;
     color: #1f2937;  /* text-gray-800 */
     text-align: center;
-    margin-bottom: 2rem;  /* mb-8 */
+    margin-bottom: 0.5rem;  /* mb-8 */
   }
   
   .upload-content p {
     text-align: center;
     color: #4b5563;  /* text-gray-600 */
+    margin-top: 10px;      /* 상단 마진만 적용 */
     margin-bottom: 2rem;
   }
   

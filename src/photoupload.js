@@ -95,8 +95,19 @@ const PhotoUpload = () => {
       </div>
 
       <div className="upload-content">
-        <h2>반려 가족 추억하기</h2>
-        <p>떠나간 내 가족과의 순간으로 사진으로 추억해보아요</p>
+  <h2 style={{ 
+    color: '#1f2937',
+    paddingTop: '70px',    // 상단 패딩만 적용
+    paddingBottom: '10px', // 하단 패딩 줄임
+    marginBottom: '0'      // 마진 제거
+  }}>
+    반려 가족 추억하기
+  </h2>
+  <p style={{
+    marginTop: '10px'     // p 태그의 상단 마진만 적용
+  }}>
+    떠나간 내 가족과의 순간으로 사진으로 추억해보아요
+  </p>
 
         <div className="upload-form">
           <div className="image-upload">
