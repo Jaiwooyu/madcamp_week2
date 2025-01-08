@@ -33,31 +33,56 @@ const Splash = () => {
 
   return (
     <div className="splash-container">
-      <div className="navbar">
-        <div
-          className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors"
-          onClick={() => navigate("/dashboard")}
-          style={{ cursor: "pointer" }}
-        >
-          Re:PET
+      <nav className="bg-white shadow-md px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div
+            className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors"
+            onClick={() => navigate("/dashboard")}
+          >
+            Re:PET
+          </div>
+
+          <div className="flex items-center space-x-8">
+            <button
+              onClick={() => navigate("/record")}
+              className="text-yellow-400 hover:text-yellow-500 transition-colors"
+            >
+              기록하기
+            </button>
+            <button
+              onClick={() => {
+                navigate("/remember");
+              }}
+              className="text-gray-600 hover:text-yellow-400 transition-colors"
+            >
+              추억하기
+            </button>
+            <button
+              onClick={() => {
+                navigate("/chat");
+              }}
+              className="text-gray-600 hover:text-yellow-400 transition-colors"
+            >
+              대화하기
+            </button>
+          </div>
+
+          <div className="relative">
+            <img
+              src={user?.picture || "/default-profile.png"}
+              alt="User"
+              className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors cursor-pointer"
+              onClick={() => setShowProfileTab(!showProfileTab)}
+            />
+            {showProfileTab && (
+              <ProfileTab
+                user={user}
+                onClose={() => setShowProfileTab(false)}
+              />
+            )}
+          </div>
         </div>
-        <div className="nav-links">
-          <span onClick={() => navigate("/record")}>기록하기</span>
-          <span onClick={() => navigate("/remember")}>추억하기</span>
-          <span onClick={() => navigate("/chat")}>대화하기</span>
-        </div>
-        <div className="relative">
-          <img
-            src={user?.picture || "/default-profile.png"}
-            alt="User"
-            className="w-10 h-10 rounded-full border-2 border-yellow-200 hover:border-yellow-400 transition-colors cursor-pointer"
-            onClick={() => setShowProfileTab(!showProfileTab)}
-          />
-          {showProfileTab && (
-            <ProfileTab user={user} onClose={() => setShowProfileTab(false)} />
-          )}
-        </div>
-      </div>
+      </nav>
 
       <div className="splash-content">
         <h1 className="splash-text">기록하기가 완료됐어요!</h1>
