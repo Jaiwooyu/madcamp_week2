@@ -35,7 +35,7 @@ const Splash = () => {
     <div className="splash-container">
       <div className="navbar">
         <div
-          className="logo"
+          className="text-2xl font-bold text-gray-600 cursor-pointer hover:text-black-500 transition-colors"
           onClick={() => navigate("/dashboard")}
           style={{ cursor: "pointer" }}
         >

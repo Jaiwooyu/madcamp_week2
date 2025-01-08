@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./components/Homepage";
 import Dashboard from "./dashboard";
 import Record from "./record";
+import Chatdetail from "./chatdetail";
 import Chat from "./chat";
 import Gallery from "./gallery";
 import PhotoUpload from "./photoupload";
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/record" element={<Record />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/chatdetail" element={<Chatdetail />} />
           <Route path="/remember" element={<Gallery />} />
           <Route path="/photo/upload" element={<PhotoUpload />} />
           <Route path="/photo/:id" element={<PhotoDetail />} />
