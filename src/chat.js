@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileTab from "./ProfileTab";
 import trash from "./assets/images/trash.png"; // 이미지 import 추가
+import detail from "./assets/images/detail.png"; // 이미지 import 추가
 
 const Chat = () => {
   const [user, setUser] = useState(null);
@@ -49,6 +50,10 @@ const Chat = () => {
   // 채팅 시작
   const handleChatStart = (petId) => {
     navigate(`/chatdetail?petId=${petId}`);
+  };
+
+  const handlePetDetail = (petId) => {
+    navigate(`/petDetail?petId=${petId}`);
   };
 
   return (
@@ -126,18 +131,34 @@ const Chat = () => {
                   {pet.name}
                 </span>
               </div>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeletePet(pet.id);
-                }}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <img
-                  src={trash}
-                  className="w-5 h-5 text-gray-500 hover:text-red-500"
-                />
-              </button>
+              <div className="flex items-center space-x-3">
+                {" "}
+                {/* 두 버튼 사이 공간을 주기 위해 flex 컨테이너를 추가 */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePetDetail(pet.id);
+                  }}
+                  className="p-2 rounded-full transition-colors w-12 h-12 flex items-center justify-center z-10" // 버튼 사이즈 조정
+                >
+                  <img
+                    src={detail}
+                    className="w-6 h-auto text-gray-500 hover:text-red-500" // 아이콘 크기 조정
+                  />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeletePet(pet.id);
+                  }}
+                  className="p-2 rounded-full transition-colors w-12 h-12 flex items-center justify-center" // 버튼 사이즈 조정
+                >
+                  <img
+                    src={trash}
+                    className="w-6 h-auto text-gray-500 hover:text-red-500" // 아이콘 크기 조정
+                  />
+                </button>
+              </div>
             </div>
           ))}
         </div>

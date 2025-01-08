@@ -9,6 +9,8 @@ import Gallery from "./gallery";
 import PhotoUpload from "./photoupload";
 import PhotoDetail from "./photodetail";
 import Splash from "./splash";
+import PetDetail from "./petDetail";
+
 import "./index.css"; // index.css import 추가
 
 const App = () => {
@@ -25,6 +27,7 @@ const App = () => {
           <Route path="/photo/upload" element={<PhotoUpload />} />
           <Route path="/photo/:id" element={<PhotoDetail />} />
           <Route path="/splash" element={<Splash />} />
+          <Route path="/petDetail" element={<PetDetail />} />
         </Routes>
       </Router>
     </div>

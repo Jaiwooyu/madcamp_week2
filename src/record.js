@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import ProfileTab from "./ProfileTab";
 import previmg from "./assets/images/image_preview.png";
 
 const Record = () => {
+  const [searchParams] = useSearchParams();
+  const petId = searchParams.get("petId");
   const [formData, setFormData] = useState({
     image: null,
     name: "",
@@ -23,24 +25,8 @@ const Record = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [showProfileTab, setShowProfileTab] = useState(false);
-  const location = useLocation();
-  const [pet, setPet] = useState(null);
 
-  useEffect(() => {
-    if (user) {
-      axios
-        .get("http://localhost:8080/api/pets", { withCredentials: true })
-        .then((response) => {
-          if (response.data && response.data.length > 0) {
-            setPet(response.data[0]);
-          }
-        })
-        .catch((error) => {
-          console.error("펫 정보 불러오기 실패:", error);
-        });
-    }
-  }, [user]);
-
+  // 유저 정보 가져오기
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user", { withCredentials: true })
@@ -52,14 +38,41 @@ const Record = () => {
       });
   }, [navigate]);
 
+  // petId가 있을 경우 해당 데이터 불러오기
+  useEffect(() => {
+    if (petId) {
+      axios
+        .get(`http://localhost:8080/api/pets/${petId}`, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          const petData = response.data;
+          setFormData({
+            ...formData,
+            name: petData.name,
+            birthDate: petData.birthDate,
+            gender: petData.gender,
+            species: petData.species,
+            personality: petData.personality,
+            traits: petData.traits,
+            happyMemory: petData.happyMemory,
+            mishap: petData.mishap,
+            strengths: petData.strengths,
+            weaknesses: petData.weaknesses,
+            imagePreview: `http://localhost:8080${petData.imageUrl}`,
+          });
+        })
+        .catch((error) => {
+          console.error("펫 정보 불러오기 실패:", error);
+        });
+    }
+  }, [petId]);
+
   const handleInputChange = (e, field) => {
     const value = e.target.value;
 
-    // 출생일 입력을 yyyy.mm.dd 형식으로 자동 포맷
     if (field === "birthDate") {
-      // 숫자 외 문자는 입력되지 않도록 처리
       const formattedValue = value.replace(/[^0-9.]/g, "");
-      // 날짜 포맷 맞추기 (yyyy.mm.dd 형식)
       const datePattern = /(\d{4})(\d{2})(\d{2})/;
       const formattedDate = formattedValue.replace(datePattern, "$1.$2.$3");
       setFormData({ ...formData, birthDate: formattedDate });
@@ -73,11 +86,10 @@ const Record = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        // 미리보기용 이미지 URL과 파일을 따로 저장
         setFormData({
           ...formData,
-          image: file, // 서버 전송용 File 객체
-          imagePreview: event.target.result, // 미리보기용 base64 문자열
+          image: file,
+          imagePreview: event.target.result,
         });
       };
       reader.readAsDataURL(file);
@@ -87,7 +99,8 @@ const Record = () => {
   const validateStep = () => {
     const newErrors = {};
     if (currentStep === 0) {
-      if (!formData.image) newErrors.image = "사진을 업로드해주세요.";
+      if (!formData.image && !formData.imagePreview)
+        newErrors.image = "사진을 업로드해주세요.";
       ["name", "birthDate", "species", "gender"].forEach((field) => {
         if (!formData[field]) newErrors[field] = "필수 입력입니다.";
       });
@@ -99,8 +112,7 @@ const Record = () => {
       ["happyMemory", "mishap"].forEach((field) => {
         if (!formData[field]) newErrors[field] = "필수 입력입니다.";
       });
-    }
-    if (currentStep === 3) {
+    } else if (currentStep === 3) {
       ["strengths", "weaknesses"].forEach((field) => {
         if (!formData[field]) newErrors[field] = "필수 입력입니다.";
       });
@@ -127,17 +139,26 @@ const Record = () => {
   const submitData = () => {
     const submitForm = new FormData();
     Object.keys(formData).forEach((key) => {
-      submitForm.append(key, formData[key]);
+      if (key !== "imagePreview") {
+        submitForm.append(key, formData[key]);
+      }
     });
-    console.log(formData);
 
-    axios
-      .post("http://localhost:8080/api/pets", submitForm, {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
-      })
+    const method = petId ? "put" : "post";
+    const url = petId
+      ? `http://localhost:8080/api/pets/${petId}`
+      : "http://localhost:8080/api/pets";
+
+    axios({
+      method,
+      url,
+      data: submitForm,
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    })
       .then((response) => {
         console.log(response.data);
+        navigate("/splash");
       })
       .catch((error) => {
         console.error("데이터 전송 중 오류 발생:", error);
@@ -231,7 +252,7 @@ const Record = () => {
                   <p className="text-red-500 text-sm mt-1">{errors.image}</p>
                 )}
                 <div className="relative w-full h-60 p-3">
-                  {formData.image ? (
+                  {formData.imagePreview ? (
                     <img
                       src={formData.imagePreview}
                       alt="Uploaded Preview"
@@ -278,7 +299,7 @@ const Record = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="출생 (yyyy.mm.dd)"
+                    placeholder="생일 (yyyy.mm.dd)"
                     value={formData.birthDate}
                     onChange={(e) => handleInputChange(e, "birthDate")}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
