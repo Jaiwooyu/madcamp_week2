@@ -72,7 +72,7 @@ const PhotoUpload = () => {
         <div
           className="logo"
           onClick={() => navigate("/dashboard")}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", color : "black" }}
         >
           Re:PET
         </div>
